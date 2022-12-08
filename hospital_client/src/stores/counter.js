@@ -51,6 +51,7 @@ export const useCounterStore = defineStore("counter", {
           },
         });
         console.log(data, ">> DATA REGISTER");
+        this.router.push("login");
       } catch (err) {
         console.log(err);
       }
@@ -241,32 +242,26 @@ export const useCounterStore = defineStore("counter", {
             access_token: localStorage.access_token,
           },
         });
-        this.fetchPrescription();
+        this.fetchDoctorPrescription();
       } catch (err) {
         console.log(err);
       }
     },
-    async paymentGateway() {
+    async paymentGateway(id) {
+      // console.log(id, ">> DI STORE PAYMENT");
       try {
-        window.snap.pay("TRANSACTION_TOKEN_HERE", {
+        const { data } = await axios({
+          url: this.baseUrl + "/generate-midtrans-token/" + id,
+          method: "post",
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+
+        const cb = this.updatePrescriptionStatus;
+        window.snap.pay(data.token, {
           onSuccess: function (result) {
-            /* You may add your own implementation here */
-            alert("payment success!");
-            console.log(result);
-          },
-          onPending: function (result) {
-            /* You may add your own implementation here */
-            alert("wating your payment!");
-            console.log(result);
-          },
-          onError: function (result) {
-            /* You may add your own implementation here */
-            alert("payment failed!");
-            console.log(result);
-          },
-          onClose: function () {
-            /* You may add your own implementation here */
-            alert("you closed the popup without finishing the payment");
+            cb(id);
           },
         });
       } catch (err) {

@@ -42,6 +42,17 @@ export default {
             </div>
 
             <ul class="space-y-2 tracking-wide mt-8">
+                <!-- <li>
+                    <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path class="fill-current text-gray-600 group-hover:text-cyan-600"
+                                d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
+                            <path class="fill-current text-gray-300 group-hover:text-cyan-300"
+                                d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
+                        </svg>
+                        <span class="group-hover:text-gray-700">Add Profile</span>
+                    </a>
+                </li> -->
                 <li>
                     <a @click.prevent="toMedicalRecord" href="#"
                         class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
