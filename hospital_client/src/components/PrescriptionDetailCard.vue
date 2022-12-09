@@ -3,7 +3,10 @@ import { useCounterStore } from '../stores/counter';
 import { mapActions, mapState } from 'pinia';
 export default {
     methods: {
-        ...mapActions(useCounterStore, ['fetchPrescriptionById'])
+
+        ...mapActions(useCounterStore, ['fetchPrescriptionById']),
+        ...mapActions(useCounterStore, ['updatePrescriptionStatus'])
+
     },
     created() {
         this.fetchPrescriptionById(this.$route.params.id)
@@ -34,8 +37,11 @@ export default {
                         {{ prescriptionDetail.User ? prescriptionDetail.User.Doctor.sip_number : "" }}
                     </p>
                     <div class="my-5 px-6">
-                        <a href="#"
-                            class="text-gray-200 block rounded-lg text-center font-medium leading-6 px-6 py-3 bg-gray-900 hover:bg-black hover:text-white">Accept</a>
+
+                        <p @submit.prevent="updatePrescriptionStatus(prescriptionDetail.id)" href="#"
+                            class="text-gray-200 block rounded-lg text-center font-medium leading-6 px-6 py-3 bg-gray-900 hover:bg-black hover:text-white">
+                            Accept</p>
+
                     </div>
 
                     <div class="w-full">

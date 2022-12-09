@@ -7,6 +7,8 @@ export default {
     data() {
         return {
 
+            patient_name: ''
+
         }
     },
     components: {
@@ -19,7 +21,9 @@ export default {
             console.log(event.target.files[0]);
         },
         sendData() {
-            this.sendImage(this.imageToSend)
+
+            this.sendImage(this.imageToSend, this.patient_name)
+
         }
     }
 }
@@ -55,7 +59,9 @@ export default {
                     <form @submit.prevent="sendData">
                         <div class="grid grid-cols-1 space-y-2">
                             <label class="text-sm font-bold text-gray-500 tracking-wide">Title</label>
-                            <input
+
+                            <input v-model="patient_name"
+
                                 class="text-base p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                                 type="" placeholder="Patient Name">
                         </div>

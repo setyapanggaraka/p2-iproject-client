@@ -1,13 +1,20 @@
-<script></script>
+
+<script>
+export default {
+    props: ['item']
+}
+</script>
+
 
 <template>
     <div class="w-full md:w-1/2 xl:w-1/3 px-4">
         <div class="bg-white rounded-lg overflow-hidden mb-10">
-            <img src="https://cdn.tailgrids.com/1.0/assets/images/cards/card-01/image-01.jpg" alt="image"
-                class="w-full" />
+
+            <img :src="item.image" alt="image" class="w-full" />
             <div class="p-8 sm:p-9 md:p-7 xl:p-9 text-center">
                 <h3>
-                    <a href="javascript:void(0)" class="
+                    <p href="javascript:void(0)" class="
+
                         font-semibold
                         text-dark text-xl
                         sm:text-[22px]
@@ -19,8 +26,10 @@
                         block
                         hover:text-primary
                         ">
-                        50+ Best creative website themes & templates
-                    </a>
+
+                        {{ item.patient_name }}
+                    </p>
+
                 </h3>
                 <p class="text-base text-body-color leading-relaxed mb-7">
                     Lorem ipsum dolor sit amet pretium consectetur adipiscing

@@ -1,16 +1,25 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+
+import Swal from "sweetalert2";
+
 export const useCounterStore = defineStore("counter", {
   state: () => {
     return {
       count: 0,
-      baseUrl: "http://127.0.0.1:3000",
+
+      baseUrl: "https://hospitalapiv3-production.up.railway.app",
+      // baseUrl: "http://127.0.0.1:3000",
+
       doctors: [],
       medicines: [],
       images: "",
       prescription: [],
       doctorPrescription: [],
       prescriptionDetail: {},
+
+      medicalRecords: [],
+
     };
   },
   actions: {
@@ -26,6 +35,10 @@ export const useCounterStore = defineStore("counter", {
           },
         });
         localStorage.setItem("access_token", data.access_token);
+
+        console.log(data, ">> DATA");
+        Swal.fire("Login Success");
+
         if (data.role === "doctor") {
           this.router.push("/doctor-medical-record");
         } else if (data.role === "admin") {
@@ -34,6 +47,13 @@ export const useCounterStore = defineStore("counter", {
         console.log(data, ">> DATA LOGIN");
       } catch (err) {
         console.log(err);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
+
       }
     },
     async register(userData) {
@@ -49,8 +69,16 @@ export const useCounterStore = defineStore("counter", {
           },
         });
         console.log(data, ">> DATA REGISTER");
+
+        this.router.push("login");
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
+
       }
     },
     logout() {
@@ -111,12 +139,20 @@ export const useCounterStore = defineStore("counter", {
         console.log(data, ">> DI STORE sukses");
       } catch (err) {
         console.log(err);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
       }
     },
-    async sendImage(sendImage) {
+    async sendImage(sendImage, name) {
       // console.log(sendImage, ">> STORE");
       const formData = new FormData();
       formData.append("gambar", sendImage);
+      formData.append("patientName", name);
+
       try {
         const { data } = await axios({
           url: this.baseUrl + "/uploads",
@@ -124,9 +160,17 @@ export const useCounterStore = defineStore("counter", {
           data: formData,
         });
         console.log(data);
+
+        this.fetchMedicalRecord();
         this.router.push("/doctor-medical-record");
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
+
       }
     },
     async fetchPrescription() {
@@ -180,6 +224,13 @@ export const useCounterStore = defineStore("counter", {
         this.router.push("/medicine");
       } catch (err) {
         console.log(err);
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
+
       }
     },
     async fetchDoctorPrescription() {
@@ -211,6 +262,68 @@ export const useCounterStore = defineStore("counter", {
         this.router.push("/doctor");
       } catch (err) {
         console.log(err, ">> EROR GOGLE");
+
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
+      }
+    },
+    async fetchMedicalRecord() {
+      try {
+        const { data } = await axios({
+          url: this.baseUrl + "/medicalRecords",
+          method: "get",
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        this.medicalRecords = data;
+        console.log(this.medicalRecords, ">>> DATANYA");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async updatePrescriptionStatus(id) {
+      try {
+        await axios({
+          url: this.baseUrl + "/prescriptions/" + id,
+          method: "patch",
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        this.fetchDoctorPrescription();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async paymentGateway(id) {
+      // console.log(id, ">> DI STORE PAYMENT");
+      try {
+        const { data } = await axios({
+          url: this.baseUrl + "/generate-midtrans-token/" + id,
+          method: "post",
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+
+        const cb = this.updatePrescriptionStatus;
+        window.snap.pay(data.token, {
+          onSuccess: function (result) {
+            cb(id);
+          },
+        });
+      } catch (err) {
+        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
+
       }
     },
   },

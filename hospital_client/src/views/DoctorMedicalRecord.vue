@@ -1,23 +1,38 @@
 <script>
 import SidebarDoctor from '../components/SidebarDoctor.vue'
 import CardMedicalRecord from '../components/CardMedicalRecord.vue'
+
+import { useCounterStore } from '../stores/counter'
+import { mapActions, mapState } from 'pinia'
+
 export default {
     components: {
         SidebarDoctor,
         CardMedicalRecord
     },
     methods: {
+
+        ...mapActions(useCounterStore, ['fetchMedicalRecord']),
+
         toAddMedicalRecord() {
             this.$router.push('/form-medical-record')
         }
     },
+
+    created() {
+        this.fetchMedicalRecord()
+    },
+    computed: {
+        ...mapState(useCounterStore, ['medicalRecords'])
+    }
+
 }
 </script>
 
 <template>
     <!-- <h1>{{ images.image }}</h1> -->
 
-    <img src="http://localhost:3000/dist/uploads/9e342a7320ad4e234869c1cfb67152cc" alt="">
+
     <SidebarDoctor />
     <div class="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
         <div class="sticky z-10 top-0 h-16 border-b bg-white lg:py-2.5">
@@ -84,9 +99,9 @@ export default {
                         New Medical Record</button>
                 </div>
                 <div class="flex flex-wrap -mx-4">
-                    <CardMedicalRecord />
-                    <!-- ljkkkkkk -->
-                    <!-- <CardMedicine /> -->
+
+                    <CardMedicalRecord v-for="item in medicalRecords" :key="item.id" :item="item" />
+
                 </div>
             </div>
         </section>
