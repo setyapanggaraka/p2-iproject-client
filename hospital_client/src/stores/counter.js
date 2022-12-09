@@ -1,19 +1,25 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+
 import Swal from "sweetalert2";
+
 export const useCounterStore = defineStore("counter", {
   state: () => {
     return {
       count: 0,
+
       baseUrl: "https://hospitalapiv3-production.up.railway.app",
       // baseUrl: "http://127.0.0.1:3000",
+
       doctors: [],
       medicines: [],
       images: "",
       prescription: [],
       doctorPrescription: [],
       prescriptionDetail: {},
+
       medicalRecords: [],
+
     };
   },
   actions: {
@@ -29,8 +35,10 @@ export const useCounterStore = defineStore("counter", {
           },
         });
         localStorage.setItem("access_token", data.access_token);
+
         console.log(data, ">> DATA");
         Swal.fire("Login Success");
+
         if (data.role === "doctor") {
           this.router.push("/doctor-medical-record");
         } else if (data.role === "admin") {
@@ -39,11 +47,13 @@ export const useCounterStore = defineStore("counter", {
         console.log(data, ">> DATA LOGIN");
       } catch (err) {
         console.log(err);
+
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: err.response.data.message,
         });
+
       }
     },
     async register(userData) {
@@ -59,6 +69,7 @@ export const useCounterStore = defineStore("counter", {
           },
         });
         console.log(data, ">> DATA REGISTER");
+
         this.router.push("login");
       } catch (err) {
         console.log(err);
@@ -67,6 +78,7 @@ export const useCounterStore = defineStore("counter", {
           title: "Oops...",
           text: err.response.data.message,
         });
+
       }
     },
     logout() {
@@ -127,6 +139,7 @@ export const useCounterStore = defineStore("counter", {
         console.log(data, ">> DI STORE sukses");
       } catch (err) {
         console.log(err);
+
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -139,6 +152,7 @@ export const useCounterStore = defineStore("counter", {
       const formData = new FormData();
       formData.append("gambar", sendImage);
       formData.append("patientName", name);
+
       try {
         const { data } = await axios({
           url: this.baseUrl + "/uploads",
@@ -146,6 +160,7 @@ export const useCounterStore = defineStore("counter", {
           data: formData,
         });
         console.log(data);
+
         this.fetchMedicalRecord();
         this.router.push("/doctor-medical-record");
       } catch (err) {
@@ -155,6 +170,7 @@ export const useCounterStore = defineStore("counter", {
           title: "Oops...",
           text: err.response.data.message,
         });
+
       }
     },
     async fetchPrescription() {
@@ -208,11 +224,13 @@ export const useCounterStore = defineStore("counter", {
         this.router.push("/medicine");
       } catch (err) {
         console.log(err);
+
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: err.response.data.message,
         });
+
       }
     },
     async fetchDoctorPrescription() {
@@ -244,6 +262,7 @@ export const useCounterStore = defineStore("counter", {
         this.router.push("/doctor");
       } catch (err) {
         console.log(err, ">> EROR GOGLE");
+
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -304,6 +323,7 @@ export const useCounterStore = defineStore("counter", {
           title: "Oops...",
           text: err.response.data.message,
         });
+
       }
     },
   },

@@ -1,16 +1,20 @@
+
 <script>
 export default {
     props: ['item']
 }
 </script>
 
+
 <template>
     <div class="w-full md:w-1/2 xl:w-1/3 px-4">
         <div class="bg-white rounded-lg overflow-hidden mb-10">
+
             <img :src="item.image" alt="image" class="w-full" />
             <div class="p-8 sm:p-9 md:p-7 xl:p-9 text-center">
                 <h3>
                     <p href="javascript:void(0)" class="
+
                         font-semibold
                         text-dark text-xl
                         sm:text-[22px]
@@ -22,8 +26,10 @@ export default {
                         block
                         hover:text-primary
                         ">
+
                         {{ item.patient_name }}
                     </p>
+
                 </h3>
                 <p class="text-base text-body-color leading-relaxed mb-7">
                     Lorem ipsum dolor sit amet pretium consectetur adipiscing

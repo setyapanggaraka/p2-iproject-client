@@ -5,9 +5,11 @@ export default {
         toPrescriptionDetail(id) {
             this.$router.push(`/prescription-detail/${id}`)
         }
+
     },
     created() {
         console.log(this.item)
+
     }
 }
 </script>
@@ -15,7 +17,9 @@ export default {
 <template>
     <div class="w-full md:w-1/2 xl:w-1/3 px-4">
         <div class="bg-white rounded-lg overflow-hidden mb-10">
+
             <img :src="item ? item.Medicine.photoUrl : ''" alt="image" class="w-full" />
+
             <div class="p-8 sm:p-9 md:p-7 xl:p-9 text-center">
                 <h3>
                     <a href="javascript:void(0)" class="
@@ -30,7 +34,9 @@ export default {
                         block
                         hover:text-primary
                         ">
+
                         {{ item.User ? item.User.Doctor.name : '' }}
+
                     </a>
                 </h3>
                 <p class="text-base text-body-color leading-relaxed">
@@ -48,6 +54,7 @@ export default {
                 <p class="text-base text-body-color leading-relaxed mb-7">
                     User Description: {{ item.use_description }}
                 </p>
+
                 <div v-if="item.status === 'claimed'">
                     <a @click.prevent="toPrescriptionDetail(item.id)" href="javascript:void(0)" class="
                          inline-block
@@ -68,6 +75,7 @@ export default {
                 <div v-if="item.status === 'unclaimed'">
                     <p>Not Yet Paid</p>
                 </div>
+
             </div>
         </div>
     </div>

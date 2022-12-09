@@ -15,7 +15,9 @@ import DoctorProfile from "../views/DoctorProfile.vue";
 import FormMedicine from "../views/FormMedicine.vue";
 import DoctorMedicine from "../views/DoctorMedicine.vue";
 import PrescriptionDetail from "../views/PrescriptionDetail.vue";
+
 import FormDoctorProfile from "../views/FormDoctorProfile.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -100,6 +102,7 @@ const router = createRouter({
       name: "prescription-detail",
       component: PrescriptionDetail,
     },
+
     {
       path: "/form-doctor-profile",
       name: "form-doctor",
@@ -114,5 +117,6 @@ const router = createRouter({
 //   else if (to.name === "register" && isLoggedIn) next({ name: "home" });
 //   else next();
 // });
+
 
 export default router;

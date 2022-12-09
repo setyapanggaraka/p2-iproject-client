@@ -42,6 +42,7 @@ export default {
             </div>
 
             <ul class="space-y-2 tracking-wide mt-8">
+
                 <!-- <li>
                     <a href="#" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -53,6 +54,7 @@ export default {
                         <span class="group-hover:text-gray-700">Add Profile</span>
                     </a>
                 </li> -->
+
                 <li>
                     <a @click.prevent="toMedicalRecord" href="#"
                         class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
