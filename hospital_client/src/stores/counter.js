@@ -5,8 +5,8 @@ export const useCounterStore = defineStore("counter", {
   state: () => {
     return {
       count: 0,
-      // baseUrl: "https://hospitalapiv3-production.up.railway.app",
-      baseUrl: "http://127.0.0.1:3000",
+      baseUrl: "https://hospitalapiv3-production.up.railway.app",
+      // baseUrl: "http://127.0.0.1:3000",
       doctors: [],
       medicines: [],
       images: "",
