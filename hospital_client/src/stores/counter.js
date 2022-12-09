@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import Swal from "sweetalert2";
 export const useCounterStore = defineStore("counter", {
   state: () => {
     return {
@@ -28,6 +29,8 @@ export const useCounterStore = defineStore("counter", {
           },
         });
         localStorage.setItem("access_token", data.access_token);
+        console.log(data, ">> DATA");
+        Swal.fire("Login Success");
         if (data.role === "doctor") {
           this.router.push("/doctor-medical-record");
         } else if (data.role === "admin") {
@@ -36,6 +39,11 @@ export const useCounterStore = defineStore("counter", {
         console.log(data, ">> DATA LOGIN");
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
       }
     },
     async register(userData) {
@@ -54,6 +62,11 @@ export const useCounterStore = defineStore("counter", {
         this.router.push("login");
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
       }
     },
     logout() {
@@ -114,6 +127,11 @@ export const useCounterStore = defineStore("counter", {
         console.log(data, ">> DI STORE sukses");
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
       }
     },
     async sendImage(sendImage, name) {
@@ -132,6 +150,11 @@ export const useCounterStore = defineStore("counter", {
         this.router.push("/doctor-medical-record");
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
       }
     },
     async fetchPrescription() {
@@ -185,6 +208,11 @@ export const useCounterStore = defineStore("counter", {
         this.router.push("/medicine");
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
       }
     },
     async fetchDoctorPrescription() {
@@ -216,6 +244,11 @@ export const useCounterStore = defineStore("counter", {
         this.router.push("/doctor");
       } catch (err) {
         console.log(err, ">> EROR GOGLE");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
       }
     },
     async fetchMedicalRecord() {
@@ -266,6 +299,11 @@ export const useCounterStore = defineStore("counter", {
         });
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
       }
     },
   },

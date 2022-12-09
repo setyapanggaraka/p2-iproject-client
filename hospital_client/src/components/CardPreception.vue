@@ -30,7 +30,7 @@ export default {
                         block
                         hover:text-primary
                         ">
-                        {{ item ? item.User.Doctor.name : '' }}
+                        {{ item.User ? item.User.Doctor.name : '' }}
                     </a>
                 </h3>
                 <p class="text-base text-body-color leading-relaxed">
